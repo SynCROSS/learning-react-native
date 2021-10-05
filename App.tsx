@@ -5,12 +5,11 @@ import {
 } from 'expo-location';
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import Loading from './components/loading/Loading';
-import { API_KEY } from '@env';
-import axios from 'axios';
+import Loading from './components/Loading';
+import Weather from './containers/weathers/Weather';
+import { getCurrentWeatherByLatitudeAndLongitude } from './lib/api/getWeatherData';
 
 export default function App() {
-  // config();
   const [isLoading, setIsLoading] = useState(true);
   const [weatherData, setWeatherData] = useState(null);
 
@@ -29,11 +28,14 @@ export default function App() {
 
         if (!latitude || !longitude) return;
 
-        const API_URL = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`;
-        const { data } = await axios.get(API_URL);
-        !!data && setIsLoading(false);
-        setWeatherData(data);
-        console.log(data);
+        const data = await getCurrentWeatherByLatitudeAndLongitude(
+          latitude,
+          longitude,
+        );
+        setWeatherData(() => data);
+        // console.log(weatherData);
+
+        setIsLoading(false);
       } catch (e) {
         const errorName = e instanceof Error ? e?.name?.toString?.() : '';
         const errorMessage = e instanceof Error ? e?.message?.toString?.() : '';
@@ -54,5 +56,5 @@ export default function App() {
     getLocation();
   }, []);
 
-  return isLoading ? <Loading /> : null;
+  return isLoading ? <Loading /> : <Weather data={weatherData} />;
 }
