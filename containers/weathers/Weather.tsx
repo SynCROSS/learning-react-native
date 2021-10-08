@@ -65,22 +65,36 @@ const WeatherForm = ({ city, temp, weather, description }) => {
       <Text>{temp}˚C</Text>
       <Text>
         {() => {
-          if (weather === 'Clouds')
-            return getCloudsDescription().filter(d => d === description)[0];
-          if (weather === 'Clear')
-            return getClearDescription().filter(d => d === description)[0];
-          if (weather === 'Rain')
-            return getRainDescription().filter(d => d === description)[0];
-          if (weather === 'Mist')
-            return getMistDescription().filter(d => d === description)[0];
-          if (weather === 'Dust')
-            return getDustDescription().filter(d => d === description)[0];
-          if (weather === 'Thunderstorm')
-            return getThunderStormDescription().filter(
-              d => d === description,
-            )[0];
-          if (weather === 'Haze')
-            return getHazeDescription().filter(d => d === description)[0];
+          let descriptions = ['No Description'];
+
+          switch (weather) {
+            case 'Clouds':
+              descriptions = getCloudsDescription();
+              break;
+            case 'Clear':
+              descriptions = getClearDescription();
+              break;
+            case 'Rain':
+              descriptions = getRainDescription();
+              break;
+            case 'Mist':
+              descriptions = getMistDescription();
+              break;
+            case 'Dust':
+              descriptions = getDustDescription();
+              break;
+            case 'Thunderstorm':
+              descriptions = getThunderStormDescription();
+              break;
+            case 'Haze':
+              descriptions = getHazeDescription();
+              break;
+            default:
+              console.info('Invalid Weather: ' + weather);
+              break;
+          }
+
+          return descriptions.filter(d => d === description)[0];
         }}
       </Text>
     </View>
