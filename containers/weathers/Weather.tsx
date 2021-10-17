@@ -1,17 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import {
-  getKindOfWeathers,
-  getClearDescription,
-  getCloudsDescription,
-  getRainDescription,
-  getMistDescription,
-  getDustDescription,
-  getThunderStormDescription,
-  getHazeDescription,
-} from '../../lib/lists/weather.list';
+import { getKindOfWeathers } from '../../lib/lists/weather.list';
 
-// TODO 날씨에 따라 다른 스타일을 불러오도록 하기
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -44,62 +34,35 @@ const styles = StyleSheet.create({
   },
 });
 
-const WeatherForm = ({ city, temp, weather, description }) => {
-  return (
-    <View
-      style={[
-        styles.container,
-        (() => {
-          if (weather === 'Clouds') return styles.clouds;
-          if (weather === 'Clear') return styles.clear;
-          if (weather === 'Rain') return styles.rain;
-          if (weather === 'Mist') return styles.mist;
-          if (weather === 'Dust') return styles.dust;
-          if (weather === 'Thunderstorm') return styles.thunderstorm;
-          if (weather === 'Haze') return styles.haze;
-        })(),
-      ]}
-    >
-      <Text>{city}</Text>
-      <Text>{weather}</Text>
-      <Text>{temp}˚C</Text>
-      <Text>
-        {() => {
-          let descriptions = ['No Description'];
+const getStyleByWeather = (weather: string) => {
+  if (!weather) return;
 
-          switch (weather) {
-            case 'Clouds':
-              descriptions = getCloudsDescription();
-              break;
-            case 'Clear':
-              descriptions = getClearDescription();
-              break;
-            case 'Rain':
-              descriptions = getRainDescription();
-              break;
-            case 'Mist':
-              descriptions = getMistDescription();
-              break;
-            case 'Dust':
-              descriptions = getDustDescription();
-              break;
-            case 'Thunderstorm':
-              descriptions = getThunderStormDescription();
-              break;
-            case 'Haze':
-              descriptions = getHazeDescription();
-              break;
-            default:
-              console.info('Invalid Weather: ' + weather);
-              break;
-          }
-
-          return descriptions.filter(d => d === description)[0];
-        }}
-      </Text>
-    </View>
-  );
+  switch (weather) {
+    case 'Clouds':
+      return styles.clouds;
+    case 'Clear':
+      return styles.clear;
+    case 'Rain':
+      return styles.rain;
+    case 'Mist':
+      return styles.mist;
+    case 'Dust':
+      return styles.dust;
+    case 'Thunderstorm':
+      return styles.thunderstorm;
+    case 'Haze':
+      return styles.haze;
+  }
 };
+
+const WeatherForm = ({ city, temp, weather, description }) => (
+  <View style={[styles.container, getStyleByWeather(weather)]}>
+    <Text>{city}</Text>
+    <Text>{weather}</Text>
+    <Text>{temp}˚C</Text>
+    <Text>{description}</Text>
+  </View>
+);
 
 const Weather = ({ data }) => {
   if (!data?.name && !data?.main?.temp && !data?.weather[0])
@@ -111,18 +74,31 @@ const Weather = ({ data }) => {
 
   const weather = getKindOfWeathers().filter(w => main === w)[0];
 
+  const capitalize = (description: string) => {
+    let capitalizedDescription = '';
+
+    for (const d of description.split(' ')) {
+      capitalizedDescription +=
+        d.substr(0, 1).toUpperCase() + d.substr(1) + ' ';
+    }
+
+    return capitalizedDescription;
+  };
+
   return (
     <View style={styles.container}>
+      {(!city || !temp || !weather || !description) && (
+        <View style={[styles.container]}>
+          <Text>Oops! This App Can Not Get Your Weather Info.</Text>
+        </View>
+      )}
       {city && temp && weather && description && (
         <WeatherForm
           city={city}
           temp={temp}
           weather={weather}
-          description={description}
+          description={capitalize(description)}
         />
-      )}
-      {(!city || !temp || !main || !description) && (
-        <Text>Invalid Weather Data</Text>
       )}
     </View>
   );
