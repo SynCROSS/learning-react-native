@@ -12,12 +12,15 @@ const styles = StyleSheet.create({
   },
   clouds: {
     backgroundColor: '#eee',
+    color: '#111',
   },
   clear: {
     backgroundColor: '#22aaff',
+    color: '#eee',
   },
   rain: {
     backgroundColor: '#111',
+    color: '#eee',
   },
   mist: {
     backgroundColor: '#bdbdbd',
@@ -25,12 +28,15 @@ const styles = StyleSheet.create({
   },
   dust: {
     backgroundColor: '#ffca00',
+    color: '#eee',
   },
   thunderstorm: {
     backgroundColor: '#200092',
+    color: '#dfff6d',
   },
   haze: {
     backgroundColor: '#800080', // * purple
+    color: '#eee',
   },
 });
 
@@ -57,10 +63,10 @@ const getStyleByWeather = (weather: string) => {
 
 const WeatherForm = ({ city, temp, weather, description }) => (
   <View style={[styles.container, getStyleByWeather(weather)]}>
-    <Text>{city}</Text>
-    <Text>{weather}</Text>
-    <Text>{temp}˚C</Text>
-    <Text>{description}</Text>
+    <Text style={getStyleByWeather(weather)}>{city}</Text>
+    <Text style={getStyleByWeather(weather)}>{weather}</Text>
+    <Text style={getStyleByWeather(weather)}>{temp}˚C</Text>
+    <Text style={getStyleByWeather(weather)}>{description}</Text>
   </View>
 );
 
