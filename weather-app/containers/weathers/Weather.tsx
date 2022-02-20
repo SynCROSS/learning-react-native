@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ViewStyle,
+  TextStyle,
+  ImageStyle,
+} from 'react-native';
 import { getKindOfWeathers } from '../../lib/lists/weather.list';
 
 const styles = StyleSheet.create({
@@ -40,28 +47,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const getStyleByWeather = (weather: string) => {
-  if (!weather) return;
+type Style = ViewStyle | TextStyle | ImageStyle;
 
-  switch (weather) {
-    case 'Clouds':
-      return styles.clouds;
-    case 'Clear':
-      return styles.clear;
-    case 'Rain':
-      return styles.rain;
-    case 'Mist':
-      return styles.mist;
-    case 'Dust':
-      return styles.dust;
-    case 'Thunderstorm':
-      return styles.thunderstorm;
-    case 'Haze':
-      return styles.haze;
-  }
+const getStyleByWeather = (weather: string) => {
+  const weatherMap: Record<string, Style> = {
+    Clouds: styles.clouds,
+    Clear: styles.clear,
+    Rain: styles.rain,
+    Mist: styles.mist,
+    Dust: styles.dust,
+    Thunderstorm: styles.thunderstorm,
+    Haze: styles.haze,
+  };
+
+  return weatherMap?.[weather];
 };
 
-const WeatherForm = ({ city, temp, weather, description }) => (
+const WeatherForm = ({
+  city = 'Unknown',
+  temp = NaN,
+  weather = '',
+  description = 'Unknown',
+}) => (
   <View style={[styles.container, getStyleByWeather(weather)]}>
     <Text style={getStyleByWeather(weather)}>{city}</Text>
     <Text style={getStyleByWeather(weather)}>{weather}</Text>
@@ -80,16 +87,14 @@ const Weather = ({ data }) => {
 
   const weather = getKindOfWeathers().filter(w => main === w)[0];
 
-  const capitalize = (description: string) => {
-    let capitalizedDescription = '';
-
-    for (const d of description.split(' ')) {
-      capitalizedDescription +=
-        d.substr(0, 1).toUpperCase() + d.substr(1) + ' ';
-    }
-
-    return capitalizedDescription;
-  };
+  const capitalize = (description: string) =>
+    description
+      ?.split?.(' ')
+      ?.map?.(
+        ([firstLetter, ...restLetters]) =>
+          firstLetter?.toUpperCase?.() + restLetters?.join?.(''),
+      )
+      ?.join?.(' ');
 
   return (
     <View style={styles.container}>
