@@ -1,12 +1,16 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { Text, View } from 'react-native';
 
-function Greeting() {
+function Greeting({ name }) {
   return (
     <View>
-      <Text>Hello, Function Component</Text>
+      <Text>Hello, {name}</Text>
     </View>
   );
 }
+
+Greeting.defaultProps = {
+  name: 'Name',
+};
 
 export default Greeting;
