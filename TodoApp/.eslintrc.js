@@ -1,8 +1,26 @@
 module.exports = {
   root: true,
-  extends: ['@react-native-community', 'prettier'],
+  extends: [
+    'plugin:react/recommended',
+    '@react-native-community',
+    'airbnb',
+    'airbnb/hooks',
+    'airbnb-typescript',
+    'prettier',
+  ],
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 13,
+    sourceType: 'module',
+    project: './tsconfig.eslint.json',
+  },
   plugins: ['@typescript-eslint'],
+  rules: {
+    'global-require': 'warn',
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
