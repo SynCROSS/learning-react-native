@@ -87,7 +87,7 @@ function AddTodo({ onInsert }: AddTodoProps) {
   return (
     <View style={[styles.block, styles.bordered]}>
       <TextInput
-        placeholder="Enter TODO"
+        placeholder="Enter Todo"
         style={styles.input}
         value={text}
         onChangeText={onChangeText}

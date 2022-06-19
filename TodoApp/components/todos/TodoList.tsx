@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image, FlatList } from 'react-native';
 import { WHITE_SMOKE } from '../../lib/theme';
-import type { TODO } from './TodoItem';
+import type { Todo } from './TodoItem';
 import TodoItem from './TodoItem';
 
 const styles = StyleSheet.create({
@@ -46,7 +46,7 @@ function Empty() {
         source={require('../../assets/images/young_and_happy.png')}
         resizeMode="center"
       />
-      <Text>There Is No TODO</Text>
+      <Text>There Is No Todo</Text>
     </View>
   );
 }
@@ -56,9 +56,9 @@ function ItemSeparatorComponent() {
 }
 
 type TodoListProps = {
-  todos: TODO[];
-  onToggle: (id: TODO['id']) => void;
-  onRemove: (id: TODO['id']) => void;
+  todos: Todo[];
+  onToggle: (id: Todo['id']) => void;
+  onRemove: (id: Todo['id']) => void;
 };
 
 function TodoList({ todos, onToggle, onRemove }: TodoListProps) {

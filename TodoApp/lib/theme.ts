@@ -12,15 +12,16 @@ export type ColorValue =
   | '#AAAE7F'
   | '#143109';
 
-const colors: Map<ColorName, ColorValue> = new Map()
-  .set('Gray97', '#F7F7F7')
-  .set('White Smoke', '#EFEFEF')
-  .set('Pale Spring Bud', '#D0D6B3')
-  .set('Sage', '#AAAE7F')
-  .set('Forest Green Traditional', '#143109');
+const colors: Record<ColorName, ColorValue> = {
+  Gray97: '#F7F7F7',
+  'White Smoke': '#EFEFEF',
+  'Pale Spring Bud': '#D0D6B3',
+  Sage: '#AAAE7F',
+  'Forest Green Traditional': '#143109',
+};
 
-export const GRAY_97 = colors.get('Gray97');
-export const WHITE_SMOKE = colors.get('White Smoke');
-export const PALE_SPRING_BUD = colors.get('Pale Spring Bud');
-export const SAGE = colors.get('Sage');
-export const FOREST_GREEN_TRADITIONAL = colors.get('Forest Green Traditional');
+export const GRAY_97 = colors.Gray97;
+export const WHITE_SMOKE = colors['White Smoke'];
+export const PALE_SPRING_BUD = colors['Pale Spring Bud'];
+export const SAGE = colors.Sage;
+export const FOREST_GREEN_TRADITIONAL = colors['Forest Green Traditional'];

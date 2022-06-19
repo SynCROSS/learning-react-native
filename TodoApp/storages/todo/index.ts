@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { TODO } from '../../components/todos/TodoItem';
+import type { Todo } from '../../components/todos/TodoItem';
 
-const isValidTodos = (todos: unknown): todos is TODO[] => {
+const isValidTodos = (todos: unknown): todos is Todo[] => {
   if (!Array.isArray(todos)) {
     globalThis.console.error("'todos' must be an array");
     return false;
@@ -32,7 +32,7 @@ const getErrorMessage = (e: unknown) => {
   return message;
 };
 
-export const getTodos = async (): Promise<TODO[]> => {
+export const getTodos = async (): Promise<Todo[]> => {
   try {
     const stringTodos = await AsyncStorage.getItem('todos');
 
@@ -50,7 +50,7 @@ export const getTodos = async (): Promise<TODO[]> => {
   }
 };
 
-export const saveTodos = async (todos: TODO[] | undefined) => {
+export const saveTodos = async (todos: Todo[] | undefined) => {
   try {
     if (isValidTodos(todos)) {
       await AsyncStorage.setItem('todos', JSON.stringify(todos));

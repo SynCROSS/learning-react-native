@@ -51,21 +51,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export type TODO = {
+export type Todo = {
   id: number;
   text: string;
   isDone: boolean;
 };
 
-type TodoItemProps = TODO & {
-  onToggle: (id: TODO['id']) => void;
-  onRemove: (id: TODO['id']) => void;
+type TodoItemProps = Todo & {
+  onToggle: (id: Todo['id']) => void;
+  onRemove: (id: Todo['id']) => void;
 };
 
 function TodoItem({ id, text, isDone, onToggle, onRemove }: TodoItemProps) {
   const alertForRemove = () => {
     Alert.alert(
-      'Delete TODO',
+      'Delete Todo',
       'Are you sure you want to Delete this item?',
       [
         {
