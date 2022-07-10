@@ -4,13 +4,11 @@ import type {
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export type RootStackParamList<T = ParamListBase> =
-  | T
-  | {
-      Home: NavigatorScreenParams<T>;
-      Detail: { id: number };
-      NotFound: undefined;
-    };
+export type RootStackParamList<T = ParamListBase> = {
+  Home: NavigatorScreenParams<T>;
+  Detail: { id: number };
+  NotFound: undefined;
+};
 
 export type ScreenProps<
   RouteName extends keyof RootStackParamList,
