@@ -11,18 +11,23 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 48,
   },
+  buttons: {
+    flexDirection: 'row',
+  },
 });
 
 function DetailScreen({ route, navigation }: ScreenProps<'Detail'>) {
   return (
     <View style={styles.block}>
       <Text style={styles.text}>id: {route.params.id}</Text>
-      <Button
-        title="Next"
-        onPress={() =>
-          navigation.navigate('Detail', { id: route.params.id + 1 })
-        }
-      />
+      <View style={styles.buttons}>
+        <Button title="Prev" onPress={() => navigation.pop()} />
+        <Button
+          title="Next"
+          onPress={() => navigation.push('Detail', { id: route.params.id + 1 })}
+        />
+        <Button title="Back To Top" onPress={() => navigation.popToTop()} />
+      </View>
     </View>
   );
 }
